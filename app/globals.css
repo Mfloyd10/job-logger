@@ -5,3 +5,14 @@ body {
   background-color: white;
 }
 
+.job-feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+}
