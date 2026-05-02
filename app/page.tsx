@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function Home() {
 
-    const [jobType, setJobType] = useState("")
+    const [jobType, setJobType] = useState("carpentry")
     const [invoicedAmount, setInvoicedAmount] = useState("");
     const [dateCompleted, setDateCompleted] = useState("");
     const [customerNotes, setCustomerNotes] = useState("");
@@ -18,6 +18,7 @@ export default function Home() {
                     id="jobType"
                     value={jobType}
                     onChange={(e) => setJobType(e.target.value)}
+                    required
             >
                 <option value="carpentry">Carpentry</option>
                 <option value="hvac">HVAC Install</option>
@@ -32,6 +33,7 @@ export default function Home() {
                 name="invoicedAmount"
                 id="invoicedAmount"
                 value={invoicedAmount}
+                required
                 onChange={(e) => {
                     const val = e.target.value;
                     if (val === "" || /^\d*\.?\d*$/.test(val)) {
@@ -46,6 +48,7 @@ export default function Home() {
                 name="dateCompleted"
                 id="dateCompleted"
                 value={dateCompleted}
+                required
                 onChange={(e) => setDateCompleted(e.target.value)}
             />
 
@@ -55,6 +58,7 @@ export default function Home() {
                 name="customerNotes"
                 id="customerNotes"
                 value={customerNotes}
+                required
                 onChange={(e) => setCustomerNotes(e.target.value)}
             />
 
