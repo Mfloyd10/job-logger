@@ -1,18 +1,127 @@
 @import "tailwindcss";
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: white;
+/* ── Global ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.job-feed {
+main {
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+/* ── Header Banner ── */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f6bd56;
+  padding: 24px 16px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+header > span {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ── Shared card style ── */
+.job-log-form,
+.job-feed {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px;
+  margin: 24px auto;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* ── Form Section ── */
+.job-log-form h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.job-log-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-message {
+  text-align: center;
+  font-weight: 600;
+}
+
+.job-log-form label {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.job-log-form input,
+.job-log-form select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.job-log-form input:focus,
+.job-log-form select:focus {
+  outline: none;
+  border-color: #f6bd56;
+  box-shadow: 0 0 0 2px rgba(246, 189, 86, 0.3);
+}
+
+.job-log-form button {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: #f6bd56;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.job-log-form button:hover {
+  background-color: #e5a83d;
+}
+
+/* ── Job Feed Section ── */
+.job-feed h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 16px;
 }
 
 .job-row {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 1.5rem;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background-color: #fafafa;
+}
 
+.job-row p {
+  font-size: 0.9rem;
+  color: #333;
 }

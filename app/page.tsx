@@ -10,6 +10,7 @@ export default function Home() {
     const [dateCompleted, setDateCompleted] = useState("");
     const [customerNotes, setCustomerNotes] = useState("");
     const [recentJobs, setRecentJobs] = useState<Job[]>([]);
+    const [errorMessage, setErrorMessage] = useState("");
 
     type Job = {
         id: number;
@@ -64,9 +65,9 @@ export default function Home() {
 
         if (error) {
             console.error("Error saving job", error);
-            alert("Error saving job");
+            setErrorMessage("Error saving job.");
         } else {
-            alert("Job saved!");
+            setErrorMessage("Job saved successfully!");
             setJobType("carpentry");
             setInvoicedAmount("");
             setDateCompleted("");
@@ -77,7 +78,13 @@ export default function Home() {
 
     return (
         <main>
-            <h1>Job Logger</h1>
+            <header>
+                <h1>Job Logger</h1>
+                <span>Built By The Trades</span>
+            </header>
+
+            <div className="job-log-form">
+            <h1>Log a Job</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="jobType">Service Completed: </label>
                 <select name="jobType"
@@ -129,12 +136,14 @@ export default function Home() {
                     onChange={(e) => setCustomerNotes(e.target.value)}
                 />
 
+                <p className="form-message">{errorMessage}</p>
                 <button type="submit">Save Job</button>
 
             </form>
+            </div>
 
-            <h2>Recent Jobs</h2>
             <div className="job-feed">
+                <h2>Recent Jobs</h2>
                 {recentJobs.map((job) => (
                     <div key={job.id} className="job-row">
                         <p>Service: {job.job_type}</p>
