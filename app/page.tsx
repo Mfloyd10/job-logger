@@ -11,6 +11,7 @@ export default function Home() {
     const [customerNotes, setCustomerNotes] = useState("");
     const [recentJobs, setRecentJobs] = useState<Job[]>([]);
     const [errorMessage, setErrorMessage] = useState("");
+    const invoiceTotal = recentJobs.reduce((total, job) => total + job.invoiced_amount, 0);
 
     type Job = {
         id: number;
@@ -131,7 +132,6 @@ export default function Home() {
                     name="customerNotes"
                     id="customerNotes"
                     value={customerNotes}
-                    required
                     autoComplete="off"
                     onChange={(e) => setCustomerNotes(e.target.value)}
                 />
@@ -149,9 +149,11 @@ export default function Home() {
                         <p>Service: {job.job_type}</p>
                         <p>Amount: ${job.invoiced_amount}</p>
                         <p>Date: {job.date_completed}</p>
-                        <p>Notes: {job.customer_notes}</p>
+                        <p>Notes: {job.customer_notes || "N/A"}</p>
                     </div>
                 ))}
+                <p className="job-row">Total Invoiced: ${invoiceTotal.toFixed(2)}</p>
+
             </div>
 
         </main>
