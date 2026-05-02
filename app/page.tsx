@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { supabase } from "@/lib/supabase";
 
 export default function Home() {
@@ -9,6 +9,34 @@ export default function Home() {
     const [invoicedAmount, setInvoicedAmount] = useState("");
     const [dateCompleted, setDateCompleted] = useState("");
     const [customerNotes, setCustomerNotes] = useState("");
+    const [recentJobs, setRecentJobs] = useState<Job[]>([]);
+
+    type Job = {
+        id: number;
+        job_type: string;
+        invoiced_amount: number;
+        date_completed: string;
+        customer_notes: string;
+        created_at: string;
+    }
+
+    useEffect(() => {
+        const fetchJobs = async () => {
+            const { data, error } = await supabase
+                .from("jobs")
+                .select("*")
+                .order("created_at", { ascending: false })
+                .limit(10);
+
+            if (error) {
+                console.error("Error fetching jobs:", error);
+            } else {
+                setRecentJobs(data);
+            }
+        };
+
+        fetchJobs();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -31,6 +59,7 @@ export default function Home() {
             setDateCompleted("");
             setCustomerNotes("");
         }
+
 
     }
 
@@ -91,6 +120,19 @@ export default function Home() {
             <button type="submit" >Save Job</button>
 
         </form>
+
+        <h2>Recent Jobs</h2>
+        <div className="job-feed">
+          {recentJobs.map((job) => (
+              <div key={job.id} className="job-row">
+                  <p>Service: {job.job_type}</p>
+                  <p>Amount: ${job.invoiced_amount}</p>
+                  <p>Date: {job.date_completed}</p>
+                  <p>Notes: {job.customer_notes}</p>
+              </div>
+          ))}
+        </div>
+
       </main>
   );
 }
