@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function Home() {
 
@@ -9,10 +10,34 @@ export default function Home() {
     const [dateCompleted, setDateCompleted] = useState("");
     const [customerNotes, setCustomerNotes] = useState("");
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const { error } = await supabase.from("jobs").insert({
+            job_type: jobType,
+            invoiced_amount: parseFloat(invoicedAmount),
+            date_completed: dateCompleted,
+            customer_notes: customerNotes,
+        });
+
+        if (error) {
+            console.error("Error saving job", error);
+            alert("Error saving job");
+        }
+        else {
+            alert("Job saved!");
+            setJobType("carpentry");
+            setInvoicedAmount("");
+            setDateCompleted("");
+            setCustomerNotes("");
+        }
+
+    }
+
   return (
       <main>
         <h1>Job Logger</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="jobType">Service Completed: </label>
             <select name="jobType"
                     id="jobType"
@@ -59,10 +84,11 @@ export default function Home() {
                 id="customerNotes"
                 value={customerNotes}
                 required
+                autoComplete="off"
                 onChange={(e) => setCustomerNotes(e.target.value)}
             />
 
-            <button type="submit">Save Job</button>
+            <button type="submit" >Save Job</button>
 
         </form>
       </main>
